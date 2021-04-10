@@ -1,0 +1,233 @@
+<div class="row mb-1">
+    <div class="col">
+        <div class=" text-center mb-3 box-shadow">
+            <h1>LISTE DES ASSIGNEMENTS</h1>
+        </div>
+    </div>
+</div>
+<div *ngIf="type=='grid'" class="row text-center">
+	<div class="col-6"  [dragula]="'bag-1'">
+		<h4>First Container</h4>
+			<div *ngFor="let assignment of assignments | paginate: { itemsPerPage: 4, currentPage: p }; let i = index;" >
+		<div class="card card-primary rounded-0 draggable">
+				<div class="flip">
+					<div class="content">
+						<div class="front">
+							<div class="card border-0 box-shadow rounded-0">
+								<div class="card-header border-0 rounded-0 text-muted">
+									<h5 class="mb-0">
+										<i *ngIf="assignment.rendu" class="fa fa-check-square-o mr-2" [ngClass]="{ 'text-success': assignment.rendu,
+																				'text-inverse': !assignment.rendu}" placement="bottom" [ngbTooltip]="(assignment.rendu) ? 'active' : 'passive'"></i>
+										<i *ngIf="!assignment.rendu" class="fa fa-check-square-o mr-2 text-danger" placement="bottom" [ngbTooltip]="'deleted'"></i>
+										{{assignment.auteur}}
+									</h5>
+									<div class="widget-controls"> 
+										<a (click)="openModal(modalContentnote, assignment)" href="javascript:void(0);" class="transition"><i class="fa fa-pencil"></i></a>
+										<a (click)="openModal(modalContent, assignment)" href="javascript:void(0);" class="transition"><i class="fa fa-bars"></i></a>
+										<a (click)="deleteAssignment(assignment)" href="javascript:void(0);" class="transition"><i class="fa fa-trash"></i></a>
+									</div>        
+								</div>
+								<div class="card-body pt-3">
+									
+									<div class="media">
+										<div class="d-flex flex-column justify-content-center">
+											<img *ngIf="assignment.image" class="rounded-circle" [src]="assignment.image" width="80">
+											<img *ngIf="!assignment.image" class="rounded-circle" src="assets/img/users/default-user.jpg" width="80">
+											<ul class="list-inline mb-0 mt-1 mx-auto fs-12 text-gray">
+												<li class="list-inline-item mr-0">
+												</li>
+												<li class="list-inline-item mr-0">
+													<span class="fa-stack">
+														<i class="{{assignment.matiereimage}} fa-stack-2x"></i>
+													</span>
+												</li>
+												<li class="list-inline-item mr-0">
+												</li>                                
+											</ul>
+										</div>                    
+										<div class="media-body ml-3">
+											<div class="row">  
+												<div class="col-4 text-gray text-right pr-0 font-italic text-truncate">Titre:</div>
+												<div class="col-8 pl-2 text-truncate">{{assignment.nom}}</div>
+												<div class="col-4 text-gray text-right pr-0 font-italic text-truncate">Matière:</div>
+												<div class="col-8 pl-2 text-truncate">{{assignment.matiere}}</div>
+												<div class="col-4 text-gray text-right pr-0 font-italic text-truncate">Date de rendu:</div>
+												<div class="col-8 pl-2 text-truncate">{{assignment.dateDerendu}}</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-6"  [dragula]="'bag-1'">
+	   <h4>Second Container</h4>
+	   <div class="card card-warning text-white rounded-0 draggable">
+		  <div class="card-body">
+			  <h4 class="card-title">Move me!</h4>
+			  <p class="card-text">You can move these elements between these two containers.</p>
+		  </div>
+	  </div>
+	</div>
+</div>
+<div  class="row">
+    
+</div>
+
+<div *ngIf="type=='list'" class="row">
+    <div class="col-12">
+        <div class="table-responsive bg-white box-shadow">
+            <table class="table table-hover">
+                <thead>
+                    <tr> 
+                        <th></th>
+                        <th>Full Name anju</th> 
+                        <th>Matière</th>                      
+                        <th>dateDerendu</th>                        
+                        <th>note</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Joined</th>                        
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let assignment of assignments | paginate: { itemsPerPage: 6, currentPage: p }">
+                        <td class="align-middle">
+                            <img *ngIf="assignment.image" class="rounded-circle" [src]="assignment.image" width="40">
+                            <img *ngIf="!assignment.image" class="rounded-circle" src="assets/img/users/default-user.jpg" width="40">
+                        </td>
+                        <td class="align-middle text-truncate">{{assignment.auteur}} </td>
+                        <td class="align-middle text-truncate">{{assignment.matiere}}</td>
+                        <td class="align-middle text-truncate">{{assignment.dateDerendu}}</td>
+                        <td class="align-middle text-truncate">{{assignment.note}}</td>
+                        <td class="align-middle text-truncate">{{assignment.note}}</td>
+                        <td class="align-middle">
+                            <i *ngIf="assignment.rendu" class="fa fa-check-square-o mr-2" [ngClass]="{ 'text-success': assignment.rendu,
+                                                                        'text-inverse': !assignment.rendu}" placement="bottom" [ngbTooltip]="(assignment.rendu) ? 'active' : 'passive'"></i>
+                            <i *ngIf="!assignment.rendu" class="fa fa-check-square-o mr-2 text-danger" placement="bottom" [ngbTooltip]="'deleted'"></i>
+                        </td>
+                        
+                        <td class="align-middle">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-secondary btn-sm" (click)="openModal(modalContentnote, assignment)"><i class="fa fa-adjust"></i></button>
+                                <button class="btn btn-secondary btn-sm" (click)="openModal(modalContent, assignment)"><i class="fa fa-pencil"></i></button>
+                                <button class="btn btn-secondary btn-sm" (click)="deleteAssignment(assignment)"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="bg-white text-center">
+            <pagination-controls autoHide="true" (pageChange)="p = $event" maxSize="3"></pagination-controls>
+        </div>        
+    </div>
+</div>
+
+
+<ng-template #modalContentnote>
+    <div class="modal-body bg-gray">
+        <div class="row">
+            <div class="col-12 vertical-tabs">                
+                <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="row px-3">
+                    <ul class="nav flex-column left col-3 border-0 rounded-0 mr-0 bg-light">                    
+                        <img *ngIf="assignment.image" class="w-100" [src]="assignment.image">
+                        <img *ngIf="!assignment.image" class="w-100" src="assets/img/users/default-user.jpg">
+                        <li class="nav-item bg-light">
+                            <a class="nav-link active" href="#work" data-toggle="tab">Work</a>
+                        </li>                 
+                    </ul>                    
+                    <div class="tab-content col-9 border-0">
+                        <div class="tab-pane active" id="work">                                                
+                            <div class="form-group">
+                                <label class="text-gray">Note /20</label>
+                                <input formControlName="note" class="form-control" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-gray">Remarques</label>
+                                <textarea formControlName="remarques" class="form-control"></textarea>
+                            </div>                           
+                        </div>    
+                    </div>
+                    <div class="col-12 bg-white text-center py-1">
+                        <button [disabled]="!form.valid" class="btn btn-success mr-1" type="submit"><span *ngIf="!assignment.id">Add</span><span *ngIf="assignment.id">Noter</span></button>
+                        <button type="button" class="btn btn-danger" (click)="closeModal()">Cancel</button>
+                    </div> 
+                </form> 
+            </div>
+        </div>    
+    </div>
+</ng-template>
+
+<ng-template #modalContent>
+    <div class="modal-body bg-gray">
+        <div class="row">
+            <div class="col-12 vertical-tabs">                
+                <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="row px-3">
+                    <ul class="nav flex-column left col-3 border-0 rounded-0 mr-0 bg-light">                    
+                        <img *ngIf="assignment.image" class="w-100" [src]="assignment.image">
+                        <img *ngIf="!assignment.image" class="w-100" src="assets/img/users/default-user.jpg">
+                        <li class="nav-item bg-light">
+                            <a class="nav-link active" href="#devoir" data-toggle="tab">Devoir</a>
+                        </li>
+                        <li class="nav-item bg-light">
+                            <a class="nav-link" href="#personal" data-toggle="tab">Personal</a>
+                        </li>                        
+                        <li class="nav-item bg-light">
+                            <a class="nav-link" href="#work" data-toggle="tab">Work</a>
+                        </li>                
+                    </ul>                    
+                    <div class="tab-content col-9 border-0">
+                        <div class="tab-pane active" id="devoir">                                                
+                            <div class="form-group">
+                                <label class="text-gray">Titre</label>
+                                <input formControlName="nom" class="form-control validation-field" type="text">
+                                <small class="text-danger" *ngIf="form.controls.nom.touched && form.controls.nom.errors?.required">nom is required</small>                              
+                                <small class="text-danger" *ngIf="form.controls.nom.touched && form.controls.nom.errors?.minlength">nom isn't long enough, minimum of 5 characters</small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Matière</label>
+                                <select formControlName="matiere" class="form-control">
+                                    <option>GRAILS</option>
+                                    <option>ANGULAR</option>
+                                    <option>BIG_DATA</option>
+                                </select>
+                            </div>                            
+                        </div>                  
+                        <div class="tab-pane" id="personal">
+                            <div class="form-group">
+                                <label class="text-gray">Nom de l'élève</label>
+                                <input formControlName="auteur" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="work">
+                            <div class="form-group">
+                                <label class="text-gray">Note /20</label>
+                                <input formControlName="note" class="form-control" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-gray">Remarques</label>
+                                <textarea formControlName="remarques" class="form-control"></textarea>
+                            </div>
+                        </div>      
+                    </div>
+                    <div class="col-12 bg-white text-center py-1">
+                        <button [disabled]="!form.valid" class="btn btn-success mr-1" type="submit"><span *ngIf="!assignment.id">Add</span><span *ngIf="assignment.id">Update</span></button>
+                        <button type="button" class="btn btn-danger" (click)="closeModal()">Cancel</button>
+                    </div> 
+                </form> 
+            </div>
+        </div>    
+    </div>
+</ng-template>

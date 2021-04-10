@@ -1,0 +1,16 @@
+<div class="wrapper-inner" [ngClass]="{ 'horizontal-menu-tooltip-place': (settings.theme.menuType == 'mini' && settings.theme.menu == 'horizontal') }">
+    
+    <app-header></app-header>
+
+    <div class="d-flex h-100" >
+        <app-sidebar *ngIf="settings.theme.menu == 'horizontal'"></app-sidebar>
+        <div class="main-content"> 
+            <router-outlet></router-outlet>
+        </div>
+    </div>   
+
+</div>
+<app-footer></app-footer>
+<app-back-top position="200"></app-back-top>
+
+
