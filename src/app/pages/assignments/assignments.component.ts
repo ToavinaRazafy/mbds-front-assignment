@@ -10,8 +10,7 @@ import { AssignmentsService } from './assignments.service';
   selector: 'app-membership',
   templateUrl: './assignments.component.html',
   styleUrls: ['./assignments.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  providers: [ AssignmentsService ]
+  encapsulation: ViewEncapsulation.None
 })
 export class AssignmentsComponent implements OnInit {
 
@@ -73,7 +72,7 @@ export class AssignmentsComponent implements OnInit {
 
   public getAssignments(): void {
     this.membershipService.getAssignments().subscribe( assignments =>
-        this.assignments = assignments
+        this.assignments = assignments.docs
     );
   }
 

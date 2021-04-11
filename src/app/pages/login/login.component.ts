@@ -1,39 +1,58 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators} from '@angular/forms';
-import { CustomValidators } from 'ng2-validation';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormGroup, FormControl, AbstractControl, FormBuilder, Validators} from '@angular/forms';
+import {CustomValidators} from 'ng2-validation';
+import {ToastrService} from 'ngx-toastr';
+import {LoggingService} from '../../user/logging.service';
+import {first} from 'rxjs/operators';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
-export class LoginComponent {
-  public router: Router;
-  public form:FormGroup;
-  public email:AbstractControl;
-  public password:AbstractControl;
+export class LoginComponent implements OnInit{
 
-  constructor(router:Router, fb:FormBuilder) {
-      this.router = router;
-      this.form = fb.group({
-          'email': ['', Validators.compose([Validators.required, CustomValidators.email])],
-          'password': ['', Validators.compose([Validators.required, Validators.minLength(6)])]
-      });
+    public router: Router;
+    public form: FormGroup;
+    public username: AbstractControl;
+    public password: AbstractControl;
 
-      this.email = this.form.controls['email'];
-      this.password = this.form.controls['password'];
-  }
+    constructor(private toastr: ToastrService, router: Router, fb: FormBuilder, public service: LoggingService) {
+        this.service.logout();
+        this.router = router;
+        this.form = fb.group({
+            'username': ['', Validators.required],
+            'password': ['', [Validators.required]]
+        });
 
-  public onSubmit(values:Object):void {
-      if (this.form.valid) {
-          this.router.navigate(['pages/dashboard']);
-      }
-  }
+        this.username = this.form.controls['username'];
+        this.password = this.form.controls['password'];
+    }
 
-  ngAfterViewInit(){
-      document.getElementById('preloader').classList.add('hide');                 
-  }
+    public onSubmit() {
+        if (this.form.valid) {
+            console.log('control');
+            this.service.login(this.username.value, this.password.value)
+                .pipe(first())
+                .subscribe(
+                    data => {
+                        console.log('control' + data);
+                        this.router.navigate(['/']);
+                    },
+                    error => {
+                        this.toastr.error('Email ou mot de passe incorrecte', 'Erreur');
+                    });
+        }
+    }
+
+    ngOnInit(): void {
+       // this.service.logout();
+    }
+    // tslint:disable-next-line:use-life-cycle-interface
+    ngAfterViewInit() {
+        document.getElementById('preloader').classList.add('hide');
+    }
 
 }
