@@ -4,13 +4,6 @@
   <div class="col">
     <div widget class="card border-0 box-shadow">
       <div class="card-header transparent border-0 text-muted">
-        <div class="widget-controls">
-          <a data-widgster="expand" href="#" class="transition"><i class="fa fa-chevron-down"></i></a>
-          <a data-widgster="collapse" href="#" class="transition"><i class="fa fa-chevron-up"></i></a>
-          <a data-widgster="fullscreen" href="#" class="transition"><i class="fa fa-expand"></i></a>
-          <a data-widgster="restore" href="#" class="transition"><i class="fa fa-compress"></i></a>
-          <a data-widgster="close" href="#" class="transition"><i class="fa fa-times"></i></a>
-        </div>
       </div>
       <div *ngIf="!confirmed" class="card-body widget-body">
         <div class="row">
@@ -41,9 +34,7 @@
             <div class="form-group col-md-7" [ngClass]="{'has-danger' : step.hasError && accountForm.get('matiere').hasError('required'), 'has-success' : !accountForm.get('matiere').hasError('required') }">
               <label class="form-control-label">Matière</label>
               <select formControlName="matiere" class="form-control" [ngClass]="{'form-control-danger' : step.hasError && accountForm.get('matiere').hasError('required'), 'form-control-success' : !accountForm.get('matiere').hasError('required') }">
-                <option>GRAILS</option>
-                <option>ANGULAR</option>
-                <option>BIG_DATA</option>
+                <option *ngFor="let matiere of matiereList" value="{{matiere.matiere}}">{{matiere.matiere}}</option>
               </select>
               <small class="text-danger" *ngIf="step.hasError && accountForm.get('matiere').hasError('required')">Matière is required</small>
             </div>
@@ -52,7 +43,7 @@
 
           </form>
 
-          <form *ngIf="step.name=='Personal Information'" [formGroup]="personalForm" class="row bg-light pt-2">
+          <form *ngIf="step.name=='Information sur l\'auteur'" [formGroup]="personalForm" class="row bg-light pt-2">
 
             <div class="form-group col-md-5" [ngClass]="{'has-danger' : step.hasError && personalForm.get('firstname').hasError('required'), 'has-success' : !personalForm.get('firstname').hasError('required') }">
               <label class="form-control-label">First Name</label>
@@ -69,10 +60,8 @@
             <div class="form-group col-md-7" [ngClass]="{'has-danger' : step.hasError && personalForm.get('date').hasError('required'), 'has-success' : !personalForm.get('date').hasError('required') }">
               <label class="form-control-label">Date de rendu</label>
               <div class="input-group">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="date" ngbDatepicker #birthdayDp="ngbDatepicker" [ngClass]="{'form-control-danger' :  personalForm.get('date').hasError('required'), 'form-control-success' :  !personalForm.get('date').hasError('required') }" type="text">
-                <div class="input-group-append" (click)="birthdayDp.toggle()">
-                  <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                </div>
+                <input formControlName="date" class="form-control form-control-sm" [ngClass]="{'form-control-danger' :  personalForm.get('date').hasError('required'), 'form-control-success' :  !personalForm.get('date').hasError('required') }"
+                       type="datetime-local">
                 <small class="text-danger" *ngIf="step.hasError && personalForm.get('date').hasError('required')">Date is required</small>
 
               </div>
@@ -80,25 +69,25 @@
 
           </form>
 
-          <div *ngIf="step.name=='Confirm Your Details'" class="row bg-light pt-2">
+          <div *ngIf="step.name=='Confirmation'" class="row bg-light pt-2">
 
-            <div class="col-2"><strong class="text-truncate">Full Name</strong></div>
-            <div class="col-10"><i>{{details.fullname}}</i></div>
+            <div class="col-2"><strong class="text-truncate">Auteur</strong></div>
+            <div class="col-10"><i>{{assignment.auteur}}</i></div>
             <div class="col-2"><strong class="text-truncate">Titre</strong></div>
-            <div class="col-10"><i>{{details.titre}}</i></div>
+            <div class="col-10"><i>{{assignment.nom}}</i></div>
             <div class="col-2"><strong class="text-truncate">Matière</strong></div>
-            <div class="col-10"><i>{{details.matiere}} &nbsp;</i></div>
+            <div class="col-10"><i>{{assignment.matiere}} &nbsp;</i></div>
             <div class="col-2"><strong class="text-truncate">Date de rendu</strong></div>
-            <div class="col-10"><i>{{details.date}}</i></div>
+            <div class="col-10"><i>{{rendu}}</i></div>
           </div>
 
         </div>
 
         <div class="row mt-3">
           <div class="col">
-            <button class="btn btn-primary pull-left" (click)="prev()"><i class="fa fa-chevron-left arrow"></i>&nbsp; Prev Step</button>
-            <button *ngIf="!steps[steps.length-1].active" class="btn btn-primary pull-right" (click)="next()">Next Step &nbsp;<i class="fa fa-chevron-right arrow"></i></button>
-            <button *ngIf="steps[steps.length-1].active" class="btn btn-primary pull-right" (click)="confirm()">Confirm &nbsp;<i class="fa fa-check arrow"></i></button>
+            <button class="btn btn-primary pull-left" (click)="prev()"><i class="fa fa-chevron-left arrow"></i>&nbsp; Précédent</button>
+            <button *ngIf="!steps[steps.length-1].active" class="btn btn-primary pull-right" (click)="next()">Suivant &nbsp;<i class="fa fa-chevron-right arrow"></i></button>
+            <button *ngIf="steps[steps.length-1].active" class="btn btn-primary pull-right" (click)="confirm()">Confirmer &nbsp;<i class="fa fa-check arrow"></i></button>
           </div>
         </div>
 
@@ -109,10 +98,7 @@
         <div class="col bg-light p-5">
           <div class="d-flex justify-content-center align-items-center flex-column bg-light confirmed-content">
             <i class="fa fa-check text-success" aria-hidden="true"></i>
-            <h2 class="p-3">That's all, thank you!</h2>
-            <h5 class="p-3">Order number is: 308521089</h5>
-            <p class="p-2">You will receive an email confirmation shortly at {{this.details.email}}</p>
-            <i class="fa fa-print text-muted" aria-hidden="true"></i>
+            <h2 class="p-3">Assignment {{assignment.nom}} enregistré !</h2>
           </div>
         </div>
 

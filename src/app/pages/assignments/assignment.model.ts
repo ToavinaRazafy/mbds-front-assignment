@@ -11,6 +11,19 @@ export class Assignment {
   image:string;
 
 }
+export class Matiere {
+  matiere: string;
+  matiereimage: string;
+  image: string;
+
+  constructor(public mat: string,
+              public matimage: string,
+              public img: string) {
+    this.matiere = mat;
+    this.matiereimage = matimage;
+    this.image = img;
+  }
+}
 
 
 // let date = new Date(),
