@@ -5,7 +5,9 @@ import {Assignment} from './assignment.model';
 import {catchError, map, tap} from 'rxjs/operators';
 import {LoggingService} from '../../user/logging.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AssignmentsService {
     assignments: Assignment[];
 
@@ -14,7 +16,7 @@ export class AssignmentsService {
     constructor(private loggingService: LoggingService, private http: HttpClient) {
     }
 
-    getAssignments(): Observable<Assignment[]> {
+    getAssignments(): Observable<any> {
         console.log('Dans le service de gestion des assignments...')
         //return of(this.assignments);
         return this.http.get<Assignment[]>(this.uri);

@@ -1,14 +1,16 @@
 export class Assignment {
-  id: number;
-  nom:string;
-  auteur:string;
-  matiere:string;
-  matiereimage:string;
-  dateDeRendu:Date;
-  note:number;
-  remarques:string;
-  rendu:boolean;
-  image:string;
+    _id?: string;
+    id: number;
+    nom: string;
+    auteur: string;
+    matiere: string;
+    matiereimage: string;
+    dateDeRendu: string;
+    note: string;
+    remarques: string;
+    rendu: boolean;
+    image: string;
+    __v: number;
 
 }
 
@@ -122,6 +124,6 @@ export class Assignment {
 //     } 
 //   }
 
- 
+
 // ]
 

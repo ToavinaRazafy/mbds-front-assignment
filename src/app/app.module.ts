@@ -10,6 +10,7 @@ import { AppSettings } from './app.settings';
 
 import { AppComponent } from './app.component';
 import { NotFoundComponent } from './pages/errors/not-found/not-found.component';
+import {HttpClientModule} from '@angular/common/http';
 
 
 
@@ -20,6 +21,7 @@ import { NotFoundComponent } from './pages/errors/not-found/not-found.component'
     NotFoundComponent
   ],
   imports: [
+      HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
     AgmCoreModule.forRoot({
