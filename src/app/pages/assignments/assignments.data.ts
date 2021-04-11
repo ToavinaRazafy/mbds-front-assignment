@@ -4,7 +4,6 @@ export class AssignmentsData implements InMemoryDbService {
     const users = [
         {
 
-            id: 1,
             nom:"Pennsylvania Institute of Technology",
             auteur:"Randy Heggy LOYENS",
             matiere:"BIG_DATA",
@@ -17,7 +16,6 @@ export class AssignmentsData implements InMemoryDbService {
         },
         {
 
-            id: 2,
             nom:"Andrana vaovao",
             auteur:"Toavina RAZAFY",
             matiere:"GRAILS",
@@ -31,7 +29,6 @@ export class AssignmentsData implements InMemoryDbService {
         },
         {
 
-            id: 3,
             nom:"Andrana vaovao",
             auteur:"Toavina RAZAFY",
             matiere:"GRAILS",
@@ -45,7 +42,6 @@ export class AssignmentsData implements InMemoryDbService {
         },
         {
 
-            id: 4,
             nom:"Andrana vaovao",
             auteur:"Toavina RAZAFY",
             matiere:"GRAILS",
@@ -59,7 +55,6 @@ export class AssignmentsData implements InMemoryDbService {
         },
         {
 
-            id: 5,
             nom:"Andrana vaovao",
             auteur:"Toavina RAZAFY",
             matiere:"GRAILS",
@@ -74,7 +69,6 @@ export class AssignmentsData implements InMemoryDbService {
         },
         {
 
-            id: 6,
             nom:"Andrana vaovao",
             auteur:"Toavina RAZAFY",
             matiere:"GRAILS",
@@ -88,7 +82,6 @@ export class AssignmentsData implements InMemoryDbService {
         },
         {
 
-            id: 7,
             nom:"Andrana vaovao",
             auteur:"Toavina RAZAFY",
             matiere:"GRAILS",
@@ -116,7 +109,6 @@ export class AssignmentsData implements InMemoryDbService {
         },
         {
 
-            id: 9,
             nom:"Andrana vaovao",
             auteur:"Toavina RAZAFY",
             matiere:"GRAILS",

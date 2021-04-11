@@ -32,7 +32,6 @@ import { SearchComponent } from './search/search.component';
     FormsModule,
     PerfectScrollbarModule,
     DragulaModule.forRoot(),
-    ToastrModule.forRoot(), 
     NgbModule.forRoot(),
     MultiselectDropdownModule,
     PipesModule,

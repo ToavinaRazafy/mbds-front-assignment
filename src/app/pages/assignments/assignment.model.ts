@@ -1,6 +1,5 @@
 export class Assignment {
     _id?: string;
-    id: number;
     nom: string;
     auteur: string;
     matiere: string;
@@ -10,7 +9,6 @@ export class Assignment {
     remarques: string;
     rendu: boolean;
     image: string;
-    __v: number;
 
 }
 
@@ -124,6 +122,6 @@ export class Assignment {
 //     } 
 //   }
 
-
+ 
 // ]
 
