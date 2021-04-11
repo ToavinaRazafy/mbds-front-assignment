@@ -5,7 +5,7 @@ export class Assignment {
   matiere:string;
   matiereimage:string;
   dateDeRendu:Date;
-  note:number;
+  note:string;
   remarques:string;
   rendu:boolean;
   image:string;
