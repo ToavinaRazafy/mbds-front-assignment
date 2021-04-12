@@ -27,6 +27,8 @@ export class AssignmentsService {
     }
 
     deleteAssignment(assignment: Assignment): Observable<any> {
-        return this.http.delete(this.uri + '/' + assignment.id);
+        console.log('>>>>>>>>>' + assignment._id)
+        return this.http.delete(this.uri + '/' + assignment._id);
+
     }
 }

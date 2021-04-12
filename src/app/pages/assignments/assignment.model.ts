@@ -1,14 +1,14 @@
 export class Assignment {
-  id: number;
-  nom:string;
-  auteur:string;
-  matiere:string;
-  matiereimage:string;
-  dateDeRendu:Date;
-  note:string;
-  remarques:string;
-  rendu:boolean;
-  image:string;
+    _id?: string;
+    nom: string;
+    auteur: string;
+    matiere: string;
+    matiereimage: string;
+    dateDeRendu: string;
+    note: string;
+    remarques: string;
+    rendu: boolean;
+    image: string;
 
 }
 export class Matiere {

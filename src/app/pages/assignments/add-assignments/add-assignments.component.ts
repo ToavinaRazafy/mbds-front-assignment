@@ -2,8 +2,6 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {CustomValidators} from 'ng2-validation';
 import {matieres} from '../matieres';
-import {Menu} from '../../../theme/components/menu/menu.model';
-import {horizontalMenuItems} from '../../../theme/components/menu/menu';
 import {Assignment, Matiere} from '../assignment.model';
 import {DatePipe} from '@angular/common';
 import {AssignmentsService} from '../assignments.service';
@@ -103,9 +101,9 @@ export class AddAssignmentsComponent {
         if (this.personalForm.value.date) {
             console.log(this.personalForm.value.date);
             const date = new Date(this.personalForm.value.date);
-            this.assignment.dateDeRendu = date;
+            this.rendu = this.datepipe.transform(date, 'yyyy-MM-dd HH:mm');
+            this.assignment.dateDeRendu = this.rendu;
             console.log(this.assignment.dateDeRendu)
-            this.rendu = this.datepipe.transform(this.assignment.dateDeRendu, 'yyyy-MM-dd');
             console.log('renduuuu '+this.rendu);
         }
 

@@ -3,8 +3,11 @@ import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import {IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService, GlobalConfig} from 'ngx-toastr';
-import {Assignment} from './assignment.model';
+import {Assignment, Matiere} from './assignment.model';
+import {matieres} from './matieres';
 import {AssignmentsService} from './assignments.service';
+import {DragulaService} from 'ng2-dragula';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-membership',
@@ -24,58 +27,53 @@ export class AssignmentsComponent implements OnInit {
     public genders = ['male', 'female'];
     public genderOption: string;
     public options: GlobalConfig;
-
-    public menuSelectSettings: IMultiSelectSettings = {
-        enableSearch: true,
-        checkedStyle: 'fontawesome',
-        buttonClasses: 'btn btn-secondary btn-block',
-        dynamicTitleMaxItems: 0,
-        displayAllSelectedText: true,
-        showCheckAll: true,
-        showUncheckAll: true
-    };
-    public menuSelectTexts: IMultiSelectTexts = {
-        checkAll: 'Select all',
-        uncheckAll: 'Unselect all',
-        checked: 'menu item selected',
-        checkedPlural: 'menu items selected',
-        searchPlaceholder: 'Find menu item...',
-        defaultTitle: 'Select menu items for assignment',
-        allSelected: 'All selected',
-    };
-    public menuSelectOptions: IMultiSelectOption[] = [];
+    public matiereList: Matiere[] = []
+    public matiere: Matiere;
+    public subs = new Subscription();
+    left = [];
+    right = [];
 
     constructor(public fb: FormBuilder,
                 public toastrService: ToastrService,
                 public membershipService: AssignmentsService,
-                public modalService: NgbModal) {
+                public modalService: NgbModal, private dragulaService: DragulaService) {
         this.options = this.toastrService.toastrConfig;
+        this.matiereList = matieres;
+
+        this.dragulaService.createGroup('bag-1', {
+            copyItem: (ass: Assignment) => {
+                return ass;
+            },
+        });
 
     }
 
     ngOnInit() {
         this.getAssignments();
         this.form = this.fb.group({
-            id: null,
-
+            _id: null,
             nom: [null, Validators.compose([Validators.required, Validators.minLength(3)])],
             auteur: null,
             matiere: null,
             matiereimage: null,
-            dateDerendu: null,
+            dateDeRendu: null,
             note: null,
             remarques: null,
             rendu: null,
-            image: null
+            image: null,
+            __v: null
+        });
+        this.dragulaService.dropModel('bag-1').subscribe(args => {
+            console.log(args);
         });
     }
 
     public getAssignments(): void {
         this.membershipService.getAssignments().subscribe(assignments => {
-                this.assignments = assignments.docs;
-                console.log(this.assignments[0].dateDeRendu);
-            }
-        );
+            this.assignments = assignments.docs
+            this.left.push(this.assignments[0]);
+            this.right.push(this.assignments[1]);
+        });
     }
 
     public addAssignment(assignment: Assignment) {
@@ -85,15 +83,29 @@ export class AssignmentsComponent implements OnInit {
     }
 
     public updateAssignment(assignment: Assignment) {
+        if (assignment.note !== '') {
+            assignment.rendu = true;
+        }
+        this.matiere = this.matiereList.filter(value => value.matiere === assignment.matiere)[0];
+        assignment.matiereimage = this.matiere.matiereimage;
+        assignment.image = this.matiere.image;
         this.membershipService.updateAssignment(assignment).subscribe(assignment => {
-            this.getAssignments();
+            this.getAssignments()
+        }, (error) => {
+            console.log(error);
+        }, () => {
+            this.toastrService.success('Modification avec succes!');
         });
     }
 
     public deleteAssignment(assignment: Assignment) {
-        this.membershipService.deleteAssignment(assignment).subscribe(result =>
-            this.getAssignments()
-        );
+        this.membershipService.deleteAssignment(assignment).subscribe(assignment =>
+                this.getAssignments()
+            , (error) => {
+                console.log(error);
+            }, () => {
+                this.toastrService.success('Suppression avec succes!');
+            });
     }
 
     public toggle(type) {
@@ -149,11 +161,8 @@ export class AssignmentsComponent implements OnInit {
 
     public onSubmit(assignment: Assignment): void {
         if (this.form.valid) {
-            if (assignment.id) {
+            if (assignment._id) {
                 this.updateAssignment(assignment);
-                setTimeout(() => {
-                    this.toastrService.success('Vos modifications sont enregistrés', 'Succes!');
-                });
             } else {
                 this.addAssignment(assignment);
             }
@@ -161,4 +170,7 @@ export class AssignmentsComponent implements OnInit {
         }
     }
 
+    drag(_id: string) {
+        console.log('sss ' + _id);
+    }
 }
