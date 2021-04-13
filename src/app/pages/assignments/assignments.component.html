@@ -1,3 +1,43 @@
+<div class="row mb-1 ml-0 mr-0 box-shadow">
+    <div class="m-auto ">
+        <i *ngIf="showSearch" class="fa fa-sort-up" (click)="afficheSearch()"></i>
+        <i *ngIf="!showSearch" class="fa fa-sort-down" (click)="afficheSearch()"></i>
+    </div>
+</div>
+<div class="row" *ngIf="showSearch">
+    <div class="col-12 mb-0">
+        <div widget class="card border-0 box-shadow">
+            <div class="card-header transparent border-0 text-muted">
+                <h5 class="mb-0">Filtrer par</h5>
+            </div>
+            <div class="card-block pt-0 widget-body">
+                <form class="form" id="add-form" [formGroup]="search">
+                    <div class="row ml-1 mr-1">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="auteur">Auteur :</label>
+                                <input class="form-control form-control-sm" (input)="getAssignments(1)" type="text"
+                                       name="auteur" formControlName="auteur">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="matiere">Matière :</label>
+                                <select class="form-control form-control-sm" (change)="getAssignments(1)" name="type"
+                                        name="matiere" formControlName="matiere">
+                                    <option value="">Tous</option>
+                                    <option *ngFor="let mat of matiereList"
+                                            value="{{mat.matiere}}">{{mat.matiere}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row mb-1">
     <div class="col">
         <div class=" text-center mb-3 box-shadow">
@@ -6,134 +46,200 @@
     </div>
 </div>
 <div *ngIf="type=='grid'" class="row text-center">
-	<div class="col-6"  [dragula]="'bag-1'" id="left" [(dragulaModel)]="left">
-		<h4>First Container</h4>
-			<div *ngFor="let assignment of left | paginate: { itemsPerPage: 4, currentPage: p }; let i = index;" (dragenter)="drag(assignment._id)">
-		   <div class="card card-primary rounded-0 draggable">
-				<div class="flip">
-					<div class="content">
-						<div class="front">
-							<div class="card border-0 box-shadow rounded-0">
-								<div class="card-header border-0 rounded-0 text-muted">
-									<h5 class="mb-0">
-										<i *ngIf="assignment.rendu" class="fa fa-check-square-o mr-2" [ngClass]="{ 'text-success': assignment.rendu,
-																				'text-inverse': !assignment.rendu}" placement="bottom" [ngbTooltip]="(assignment.rendu) ? 'Rendu' : 'passive'"></i>
-										<i *ngIf="!assignment.rendu" class="fa fa-check-square-o mr-2 text-danger" placement="bottom" [ngbTooltip]="'Non rendu'"></i>
-										{{assignment.auteur}}
-									</h5>
-									<div class="widget-controls"> 
-										<a (click)="openModal(modalContentnote, assignment)" href="javascript:void(0);" class="transition"><i class="fa fa-pencil"></i></a>
-										<a (click)="openModal(modalContent, assignment)" href="javascript:void(0);" class="transition"><i class="fa fa-bars"></i></a>
-										<a (click)="deleteAssignment(assignment)" href="javascript:void(0);" class="transition"><i class="fa fa-trash"></i></a>
-									</div>        
-								</div>
-								<div class="card-body pt-3">
-									
-									<div class="media">
-										<div class="d-flex flex-column justify-content-center">
-											<img *ngIf="assignment.image" class="rounded-circle" src="assets/img/profile/{{assignment.image}}" width="80">
-											<img *ngIf="!assignment.image" class="rounded-circle" src="assets/img/users/default-user.jpg" width="80">
-											<ul class="list-inline mb-0 mt-1 mx-auto fs-12 text-gray">
-												<li class="list-inline-item mr-0">
-												</li>
-												<li class="list-inline-item mr-0">
-													<span class="fa-stack">
-														<i class="{{assignment.matiereimage}} fa-stack-2x"></i>
-													</span>
-												</li>
-												<li class="list-inline-item mr-0">
-												</li>                                
-											</ul>
-										</div>                    
-										<div class="media-body ml-3">
-											<div class="row">  
-												<div class="col-4 text-gray text-right pr-0 font-italic text-truncate">Titre:</div>
-												<div class="col-8 pl-2 text-truncate">{{assignment.nom}}</div>
-												<div class="col-4 text-gray text-right pr-0 font-italic text-truncate">Matière:</div>
-												<div class="col-8 pl-2 text-truncate">{{assignment.matiere}}</div>
-												<div class="col-4 text-gray text-right pr-0 font-italic text-truncate">Date de rendu:</div>
-												<div class="col-8 pl-2 text-truncate">{{assignment.dateDeRendu}}</div>
-											</div>
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-6"  [dragula]="'bag-1'" id="right" [(dragulaModel)]="right">
-	   <h4>Second Container</h4>
-        <div *ngFor="let assignment of right | paginate: { itemsPerPage: 4, currentPage: p }; let i = index;" >
-            <div class="card card-primary rounded-0 draggable">
-                <div class="flip">
-                    <div class="content">
-                        <div class="front">
-                            <div class="card border-0 box-shadow rounded-0">
-                                <div class="card-header border-0 rounded-0 text-muted">
-                                    <h5 class="mb-0">
-                                        <i *ngIf="assignment.rendu" class="fa fa-check-square-o mr-2" [ngClass]="{ 'text-success': assignment.rendu,
-																				'text-inverse': !assignment.rendu}" placement="bottom" [ngbTooltip]="(assignment.rendu) ? 'Rendu' : 'passive'"></i>
-                                        <i *ngIf="!assignment.rendu" class="fa fa-check-square-o mr-2 text-danger" placement="bottom" [ngbTooltip]="'Non rendu'"></i>
-                                        {{assignment.auteur}}
-                                    </h5>
-                                    <div class="widget-controls">
-                                        <a (click)="openModal(modalContentnote, assignment)" href="javascript:void(0);" class="transition"><i class="fa fa-pencil"></i></a>
-                                        <a (click)="openModal(modalContent, assignment)" href="javascript:void(0);" class="transition"><i class="fa fa-bars"></i></a>
-                                        <a (click)="deleteAssignment(assignment)" href="javascript:void(0);" class="transition"><i class="fa fa-trash"></i></a>
-                                    </div>
+    <div class="col-6" id="left">
+        <h4>First Container</h4>
+        <div class="card card-primary rounded-0 draggable" *ngFor="let assignment of left; let i = index;" id="{{i}}">
+            <div class="flip">
+                <div class="content">
+                    <div class="front">
+                        <div class="card border-0 box-shadow rounded-0">
+                            <div class="card-header border-0 rounded-0 text-muted">
+                                <h5 class="mb-0">
+                                    <i *ngIf="assignment.rendu" class="fa fa-check-square-o mr-2" [ngClass]="{ 'text-success': assignment.rendu,
+																				'text-inverse': !assignment.rendu}"
+                                       placement="bottom"
+                                       [ngbTooltip]="(assignment.rendu) ? 'Rendu' : 'passive'"></i>
+                                    <i *ngIf="!assignment.rendu" class="fa fa-check-square-o mr-2 text-danger"
+                                       placement="bottom" [ngbTooltip]="'Non rendu'"></i>
+                                    {{assignment.auteur}}
+                                </h5>
+                                <div class="widget-controls">
+                                    <a (click)="openModal(modalContentnote, assignment)" href="javascript:void(0);"
+                                       class="transition"><i class="fa fa-pencil"></i></a>
+                                    <a (click)="openModal(modalContent, assignment)" href="javascript:void(0);"
+                                       class="transition"><i class="fa fa-bars"></i></a>
+                                    <a (click)="deleteAssignment(assignment)" href="javascript:void(0);"
+                                       class="transition"><i class="fa fa-trash"></i></a>
                                 </div>
-                                <div class="card-body pt-3">
+                            </div>
+                            <div class="card-body pt-3">
 
-                                    <div class="media">
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <img *ngIf="assignment.image" class="rounded-circle" src="assets/img/profile/{{assignment.image}}" width="80">
-                                            <img *ngIf="!assignment.image" class="rounded-circle" src="assets/img/users/default-user.jpg" width="80">
-                                            <ul class="list-inline mb-0 mt-1 mx-auto fs-12 text-gray">
-                                                <li class="list-inline-item mr-0">
-                                                </li>
-                                                <li class="list-inline-item mr-0">
+                                <div class="media">
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <img *ngIf="assignment.image" class="rounded-circle"
+                                             src="assets/img/profile/{{assignment.image}}" width="80">
+                                        <img *ngIf="!assignment.image" class="rounded-circle"
+                                             src="assets/img/users/default-user.jpg" width="80">
+                                        <ul class="list-inline mb-0 mt-1 mx-auto fs-12 text-gray">
+                                            <li class="list-inline-item mr-0">
+                                            </li>
+                                            <li class="list-inline-item mr-0">
 													<span class="fa-stack">
 														<i class="{{assignment.matiereimage}} fa-stack-2x"></i>
 													</span>
-                                                </li>
-                                                <li class="list-inline-item mr-0">
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="media-body ml-3">
-                                            <div class="row">
-                                                <div class="col-4 text-gray text-right pr-0 font-italic text-truncate">Titre:</div>
-                                                <div class="col-8 pl-2 text-truncate">{{assignment.nom}}</div>
-                                                <div class="col-4 text-gray text-right pr-0 font-italic text-truncate">Matière:</div>
-                                                <div class="col-8 pl-2 text-truncate">{{assignment.matiere}}</div>
-                                                <div class="col-4 text-gray text-right pr-0 font-italic text-truncate">Date de rendu:</div>
-                                                <div class="col-8 pl-2 text-truncate">{{assignment.dateDeRendu}}</div>
+                                            </li>
+                                            <li class="list-inline-item mr-0">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="media-body ml-3">
+                                        <div class="row">
+                                            <div class="col-4 text-gray text-right pr-0 font-italic text-truncate">
+                                                Titre:
                                             </div>
+                                            <div class="col-8 pl-2 text-truncate">{{assignment.nom}}</div>
+                                            <div class="col-4 text-gray text-right pr-0 font-italic text-truncate">
+                                                Matière:
+                                            </div>
+                                            <div class="col-8 pl-2 text-truncate">{{assignment.matiere}}</div>
+                                            <div class="col-4 text-gray text-right pr-0 font-italic text-truncate">
+                                                Date de rendu:
+                                            </div>
+                                            <div class="col-8 pl-2 text-truncate">{{assignment.dateDeRendu | date : "dd-MM-y HH:mm"}}</div>
                                         </div>
                                     </div>
-
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-	</div>
+        <nav aria-label="Page navigation example">
+            <ul *ngIf="pager1.pages && pager1.pages.length && pager1.totalPages>1"
+                class="pagination justify-content-center">
+                <li [ngClass]="{disabled:pager1.currentPage === 1}" class="page-item disabled">
+                    <a (click)="getAssignmentsNonRendu(1)" class="page-link" tabindex="-1" mdbWavesEffect>Premier</a>
+                </li>
+                <li [ngClass]="{disabled:pager1.currentPage === 1}" class="page-item disabled">
+                    <a (click)="getAssignmentsNonRendu(pager1.currentPage - 1)" class="page-link" tabindex="-1" mdbWavesEffect>Précédent</a>
+                </li>
+                <li *ngFor="let page of pager1.pages" [ngClass]="{active:pager1.currentPage === page}"
+                    class="page-item">
+                    <a (click)="getAssignmentsNonRendu(+page)" class="page-link" mdbWavesEffect>{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager1.currentPage === pager1.totalPages}" class="page-item">
+                    <a (click)="getAssignmentsNonRendu(pager1.currentPage + 1)" class="page-link" mdbWavesEffect>Suivant</a>
+                </li>
+                <li [ngClass]="{disabled:pager1.currentPage === pager1.totalPages}" class="page-item">
+                    <a (click)="getAssignmentsNonRendu(pager1.totalPages)" class="page-link" mdbWavesEffect>Dernier</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-6" id="right">
+        <h4>Second Container</h4>
+        <div class="card card-primary rounded-0 draggable" *ngFor="let assignment of right; let i = index;">
+            <div class="flip">
+                <div class="content">
+                    <div class="front">
+                        <div class="card border-0 box-shadow rounded-0">
+                            <div class="card-header border-0 rounded-0 text-muted">
+                                <h5 class="mb-0">
+                                    <i *ngIf="assignment.rendu" class="fa fa-check-square-o mr-2" [ngClass]="{ 'text-success': assignment.rendu,
+																				'text-inverse': !assignment.rendu}"
+                                       placement="bottom"
+                                       [ngbTooltip]="(assignment.rendu) ? 'Rendu' : 'passive'"></i>
+                                    <i *ngIf="!assignment.rendu" class="fa fa-check-square-o mr-2 text-danger"
+                                       placement="bottom" [ngbTooltip]="'Non rendu'"></i>
+                                    {{assignment.auteur}}
+                                </h5>
+                                <div class="widget-controls">
+                                    <a (click)="openModal(modalContentnote, assignment)" href="javascript:void(0);"
+                                       class="transition"><i class="fa fa-pencil"></i></a>
+                                    <a (click)="openModal(modalContent, assignment)" href="javascript:void(0);"
+                                       class="transition"><i class="fa fa-bars"></i></a>
+                                    <a (click)="deleteAssignment(assignment)" href="javascript:void(0);"
+                                       class="transition"><i class="fa fa-trash"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body pt-3">
+
+                                <div class="media">
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <img *ngIf="assignment.image" class="rounded-circle"
+                                             src="assets/img/profile/{{assignment.image}}" width="80">
+                                        <img *ngIf="!assignment.image" class="rounded-circle"
+                                             src="assets/img/users/default-user.jpg" width="80">
+                                        <ul class="list-inline mb-0 mt-1 mx-auto fs-12 text-gray">
+                                            <li class="list-inline-item mr-0">
+                                            </li>
+                                            <li class="list-inline-item mr-0">
+													<span class="fa-stack">
+														<i class="{{assignment.matiereimage}} fa-stack-2x"></i>
+													</span>
+                                            </li>
+                                            <li class="list-inline-item mr-0">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="media-body ml-3">
+                                        <div class="row">
+                                            <div class="col-4 text-gray text-right pr-0 font-italic text-truncate">
+                                                Titre:
+                                            </div>
+                                            <div class="col-8 pl-2 text-truncate">{{assignment.nom}}</div>
+                                            <div class="col-4 text-gray text-right pr-0 font-italic text-truncate">
+                                                Matière:
+                                            </div>
+                                            <div class="col-8 pl-2 text-truncate">{{assignment.matiere}}</div>
+                                            <div class="col-4 text-gray text-right pr-0 font-italic text-truncate">
+                                                Date de rendu:
+                                            </div>
+                                            <div class="col-8 pl-2 text-truncate">{{assignment.dateDeRendu | date : "dd-MM-y HH:mm"}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav aria-label="Page navigation example">
+            <ul *ngIf="pager2.pages && pager2.pages.length && pager2.totalPages>1"
+                class="pagination justify-content-center">
+                <li [ngClass]="{disabled:pager2.currentPage === 1}" class="page-item disabled">
+                    <a (click)="getAssignmentsRendu(1)" class="page-link" tabindex="-1" mdbWavesEffect>Premier</a>
+                </li>
+                <li [ngClass]="{disabled:pager2.currentPage === 1}" class="page-item disabled">
+                    <a (click)="getAssignmentsRendu(pager2.currentPage - 1)" class="page-link" tabindex="-1" mdbWavesEffect>Précédent</a>
+                </li>
+                <li *ngFor="let page of pager2.pages" [ngClass]="{active:pager2.currentPage === page}"
+                    class="page-item">
+                    <a (click)="getAssignmentsRendu(+page)" class="page-link" mdbWavesEffect>{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager2.currentPage === pager2.totalPages}" class="page-item">
+                    <a (click)="getAssignmentsRendu(pager2.currentPage + 1)" class="page-link" mdbWavesEffect>Suivant</a>
+                </li>
+                <li [ngClass]="{disabled:pager1.currentPage === pager2.totalPages}" class="page-item">
+                    <a (click)="getAssignmentsRendu(pager2.totalPages)" class="page-link" mdbWavesEffect>Dernier</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
-<div  class="row">
-    
+<div class="row">
+
 </div>
 
 <div class="row">
     <div class="col-12">
         <div class="bg-white text-center">
             <pagination-controls autoHide="true" (pageChange)="p = $event" maxSize="3"></pagination-controls>
-        </div>        
+        </div>
     </div>
 </div>
 
@@ -141,17 +247,17 @@
 <ng-template #modalContentnote>
     <div class="modal-body bg-gray">
         <div class="row">
-            <div class="col-12 vertical-tabs">                
+            <div class="col-12 vertical-tabs">
                 <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="row px-3">
-                    <ul class="nav flex-column left col-3 border-0 rounded-0 mr-0 bg-light">                    
+                    <ul class="nav flex-column left col-3 border-0 rounded-0 mr-0 bg-light">
                         <img *ngIf="assignment.image" class="w-100" src="assets/img/profile/{{assignment.image}}">
                         <img *ngIf="!assignment.image" class="w-100" src="assets/img/users/default-user.jpg">
                         <li class="nav-item bg-light">
                             <a class="nav-link active" href="#work" data-toggle="tab">Work</a>
-                        </li>                 
-                    </ul>                    
+                        </li>
+                    </ul>
                     <div class="tab-content col-9 border-0">
-                        <div class="tab-pane active" id="work">                                                
+                        <div class="tab-pane active" id="work">
                             <div class="form-group">
                                 <label class="text-gray">Note /20</label>
                                 <input formControlName="note" class="form-control" type="number" min="0" max="20">
@@ -160,24 +266,26 @@
                                 <label class="text-gray">Remarques</label>
                                 <textarea formControlName="remarques" class="form-control"></textarea>
                             </div>
-                        </div>    
+                        </div>
                     </div>
                     <div class="col-12 bg-white text-center py-1">
-                        <button *ngIf="!assignment.rendu" [disabled]="!form.valid" class="btn btn-success mr-1" type="submit"><span *ngIf="!assignment._id">Add</span><span *ngIf="assignment._id">Noter</span></button>
+                        <button *ngIf="!assignment.rendu" [disabled]="!form.valid" class="btn btn-success mr-1"
+                                type="submit"><span *ngIf="!assignment._id">Add</span><span
+                                *ngIf="assignment._id">Noter</span></button>
                         <button type="button" class="btn btn-danger" (click)="closeModal()">Cancel</button>
-                    </div> 
-                </form> 
+                    </div>
+                </form>
             </div>
-        </div>    
+        </div>
     </div>
 </ng-template>
 
 <ng-template #modalContent>
     <div class="modal-body bg-gray">
         <div class="row">
-            <div class="col-12 vertical-tabs">                
+            <div class="col-12 vertical-tabs">
                 <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="row px-3">
-                    <ul class="nav flex-column left col-3 border-0 rounded-0 mr-0 bg-light">                    
+                    <ul class="nav flex-column left col-3 border-0 rounded-0 mr-0 bg-light">
                         <img *ngIf="assignment.image" class="w-100" src="assets/img/profile/{{assignment.image}}">
                         <img *ngIf="!assignment.image" class="w-100" src="assets/img/users/default-user.jpg">
                         <li class="nav-item bg-light">
@@ -185,26 +293,31 @@
                         </li>
                         <li class="nav-item bg-light">
                             <a class="nav-link" href="#personal" data-toggle="tab">Personal</a>
-                        </li>                        
+                        </li>
                         <li class="nav-item bg-light">
                             <a class="nav-link" href="#work" data-toggle="tab">Work</a>
-                        </li>                
-                    </ul>                    
+                        </li>
+                    </ul>
                     <div class="tab-content col-9 border-0">
-                        <div class="tab-pane active" id="devoir">                                                
+                        <div class="tab-pane active" id="devoir">
                             <div class="form-group">
                                 <label class="text-gray">Titre</label>
                                 <input formControlName="nom" class="form-control validation-field" type="text">
-                                <small class="text-danger" *ngIf="form.controls.nom.touched && form.controls.nom.errors?.required">nom is required</small>                              
-                                <small class="text-danger" *ngIf="form.controls.nom.touched && form.controls.nom.errors?.minlength">nom isn't long enough, minimum of 5 characters</small>
+                                <small class="text-danger"
+                                       *ngIf="form.controls.nom.touched && form.controls.nom.errors?.required">nom is
+                                    required</small>
+                                <small class="text-danger"
+                                       *ngIf="form.controls.nom.touched && form.controls.nom.errors?.minlength">nom
+                                    isn't long enough, minimum of 5 characters</small>
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label">Matière</label>
                                 <select formControlName="matiere" class="form-control">
-                                    <option *ngFor="let matiere of matiereList" value="{{matiere.matiere}}">{{matiere.matiere}}</option>
+                                    <option *ngFor="let matiere of matiereList"
+                                            value="{{matiere.matiere}}">{{matiere.matiere}}</option>
                                 </select>
-                            </div>                            
-                        </div>                  
+                            </div>
+                        </div>
                         <div class="tab-pane" id="personal">
                             <div class="form-group">
                                 <label class="text-gray">Nom de l'élève</label>
@@ -220,14 +333,15 @@
                                 <label class="text-gray">Remarques</label>
                                 <textarea formControlName="remarques" class="form-control"></textarea>
                             </div>
-                        </div>      
+                        </div>
                     </div>
                     <div class="col-12 bg-white text-center py-1">
-                        <button [disabled]="!form.valid" class="btn btn-success mr-1" type="submit"><span *ngIf="!assignment._id">Add</span><span *ngIf="assignment._id">Update</span></button>
+                        <button [disabled]="!form.valid" class="btn btn-success mr-1" type="submit"><span
+                                *ngIf="!assignment._id">Add</span><span *ngIf="assignment._id">Update</span></button>
                         <button type="button" class="btn btn-danger" (click)="closeModal()">Cancel</button>
-                    </div> 
-                </form> 
+                    </div>
+                </form>
             </div>
-        </div>    
+        </div>
     </div>
 </ng-template>

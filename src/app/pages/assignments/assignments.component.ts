@@ -8,6 +8,7 @@ import {matieres} from './matieres';
 import {AssignmentsService} from './assignments.service';
 import {DragulaService} from 'ng2-dragula';
 import {Subscription} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'app-membership',
@@ -30,13 +31,20 @@ export class AssignmentsComponent implements OnInit {
     public matiereList: Matiere[] = []
     public matiere: Matiere;
     public subs = new Subscription();
+    page: number = 1;
+    limit: number = 50;
+    pager1: any = {};
+    pager2: any = {};
     left = [];
     right = [];
+    showSearch: boolean = true;
+    public search: FormGroup;
 
     constructor(public fb: FormBuilder,
                 public toastrService: ToastrService,
                 public membershipService: AssignmentsService,
-                public modalService: NgbModal, private dragulaService: DragulaService) {
+                public modalService: NgbModal, private dragulaService: DragulaService, private route: ActivatedRoute,
+                private router: Router) {
         this.options = this.toastrService.toastrConfig;
         this.matiereList = matieres;
 
@@ -45,11 +53,23 @@ export class AssignmentsComponent implements OnInit {
                 return ass;
             },
         });
+        this.search = this.fb.group({
+            auteur: new FormControl('', []),
+            matiere: new FormControl('', [])
+        });
 
     }
 
+    afficheSearch() {
+        if (this.showSearch) {
+            this.showSearch = false;
+        } else {
+            this.showSearch = true;
+        }
+    }
+
     ngOnInit() {
-        this.getAssignments();
+        this.getAssignments(1);
         this.form = this.fb.group({
             _id: null,
             nom: [null, Validators.compose([Validators.required, Validators.minLength(3)])],
@@ -63,22 +83,70 @@ export class AssignmentsComponent implements OnInit {
             image: null,
             __v: null
         });
-        this.dragulaService.dropModel('bag-1').subscribe(args => {
+        /*this.dragulaService.dropModel('bag-1').subscribe(args => {
             console.log(args);
+        });*/
+    }
+
+    public getAssignments(page: number): void {
+        let auteur = null;
+        let matiere = null;
+        if (this.search.get('auteur').value) {
+            auteur = this.search.get('auteur').value.trim()
+        }
+        if (this.search.get('matiere').value) {
+            matiere = this.search.get('matiere').value.trim()
+        }
+
+        this.membershipService.getAssignments(2, auteur, matiere, page, this.limit).subscribe(assignments => {
+            this.pager1 = this.membershipService.getPager(assignments.totalDocs, page)
+            this.assignments = assignments.docs
+            this.left = this.assignments;
+            this.membershipService.getAssignments(1, auteur, matiere, page, this.limit).subscribe(assignmentss => {
+                this.pager2 = this.membershipService.getPager(assignmentss.totalDocs, page)
+                this.assignments = assignmentss.docs
+                this.right = this.assignments;
+            });
         });
     }
 
-    public getAssignments(): void {
-        this.membershipService.getAssignments().subscribe(assignments => {
+    getAssignmentsNonRendu(page: number) {
+        let auteur = null;
+        let matiere = null;
+        if (this.search.get('auteur').value) {
+            auteur = this.search.get('auteur').value.trim()
+        }
+        if (this.search.get('matiere').value) {
+            matiere = this.search.get('matiere').value.trim()
+        }
+
+        this.membershipService.getAssignments(2, auteur, matiere, page, this.limit).subscribe(assignments => {
+            this.pager1 = this.membershipService.getPager(assignments.totalDocs, page)
+            console.log(JSON.stringify(this.pager1));
             this.assignments = assignments.docs
-            this.left.push(this.assignments[0]);
-            this.right.push(this.assignments[1]);
+            this.left = this.assignments;
+        });
+    }
+
+    getAssignmentsRendu(page: number) {
+        let auteur = null;
+        let matiere = null;
+        if (this.search.get('auteur').value) {
+            auteur = this.search.get('auteur').value.trim()
+        }
+        if (this.search.get('matiere').value) {
+            matiere = this.search.get('matiere').value.trim()
+        }
+        this.membershipService.getAssignments(1, auteur, matiere, page, this.limit).subscribe(assignmentss => {
+            this.pager2 = this.membershipService.getPager(assignmentss.totalDocs, page)
+            this.assignments = assignmentss.docs
+            this.right = this.assignments;
         });
     }
 
     public addAssignment(assignment: Assignment) {
         this.membershipService.addAssignment(assignment).subscribe(assignment => {
-            this.getAssignments();
+            this.getAssignments(1);
         });
     }
 
@@ -90,7 +158,7 @@ export class AssignmentsComponent implements OnInit {
         assignment.matiereimage = this.matiere.matiereimage;
         assignment.image = this.matiere.image;
         this.membershipService.updateAssignment(assignment).subscribe(assignment => {
-            this.getAssignments()
+            this.getAssignments(1)
         }, (error) => {
             console.log(error);
         }, () => {
@@ -100,7 +168,7 @@ export class AssignmentsComponent implements OnInit {
 
     public deleteAssignment(assignment: Assignment) {
         this.membershipService.deleteAssignment(assignment).subscribe(assignment =>
-                this.getAssignments()
+                this.getAssignments(1)
             , (error) => {
                 console.log(error);
             }, () => {
