@@ -14,8 +14,8 @@ import { AssignmentsData } from './assignments.data';
 import { AddAssignmentsComponent } from './add-assignments/add-assignments.component';
 
 export const routes = [
-  { path: '', redirectTo: 'drag-drop', pathMatch: 'full'},
-  { path: 'drag-drop', component: AssignmentsComponent, data: { breadcrumb: 'Drag and Drop' } },
+  { path: '', redirectTo: 'liste', pathMatch: 'full'},
+  { path: 'liste', component: AssignmentsComponent},
   { path: 'add-assignments', component: AddAssignmentsComponent},
   { path: '', component: AssignmentsComponent, pathMatch: 'full' }
 ];
