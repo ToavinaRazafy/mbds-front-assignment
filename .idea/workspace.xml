@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e665e684-e50a-44ec-8f54-3844494632c3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/jwt-interceptor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/jwt-interceptor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
