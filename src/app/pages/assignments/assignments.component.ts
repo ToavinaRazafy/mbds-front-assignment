@@ -48,11 +48,11 @@ export class AssignmentsComponent implements OnInit {
         this.options = this.toastrService.toastrConfig;
         this.matiereList = matieres;
 
-        this.dragulaService.createGroup('bag-1', {
+       /** this.dragulaService.createGroup('bag-1', {
             copyItem: (ass: Assignment) => {
                 return ass;
             },
-        });
+        });*/
         this.search = this.fb.group({
             auteur: new FormControl('', []),
             matiere: new FormControl('', [])

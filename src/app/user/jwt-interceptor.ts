@@ -10,7 +10,7 @@ export class JwtInterceptor implements HttpInterceptor{
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const req = request.url;
         const currentUser = this.authenticationService.currentUserValue;
-        const url = document.getElementsByTagName('base')[1].href;
+        const url = 'http://localhost:4000/';
         console.log(url);
         if (!request.url.startsWith('http')) {
             request = request.clone({

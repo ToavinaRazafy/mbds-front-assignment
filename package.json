@@ -3,8 +3,7 @@
   "version": "2.3.1",
   "license": "MIT",
   "scripts": {
-    "ng": "ng",
-    "start": "node server.js",
+    "ng": "ng serve",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
