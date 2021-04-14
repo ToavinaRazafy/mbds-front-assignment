@@ -6,7 +6,7 @@
             </div>
             <div class="card-body text-center pb-1">
                 <h2>Login</h2>
-                <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="text-left mt-4">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()" class="text-left mt-4">
                     <div class="form-group">
                         <input [formControl]="username" class="form-control validation-field" placeholder="Username" type="text">
                         <small class="text-danger" *ngIf="form.get('username').touched && form.get('username').hasError('required')">Email is required</small>
