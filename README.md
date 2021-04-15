@@ -30,7 +30,7 @@ L’écran affiche :
 -Une liste des assignments non rendus avec pagination.
 -Une liste des assignments rendus avec pagination.
 -Sur le haut de la page s’affiche une zone de recherche qui contient deux input (Auteur et matière).
-La liste s’actualisera en dépits de ce qu’on écrit ou de ce que l’on choisit sur les inputs.
+La liste s’actualisera en dépits de ce que l’on écrit ou de ce que l’on choisit sur les inputs.
 Sur chaque material card, il y a trois boutons respectifs :
 -pour noter (la notation est possible si l’assignment n’est pas encore rendu, et un changement automatique du statut en rendu une fois la note attribuer).
 -pour modifier les informations (une notification s’affichera une fois l’update effectué).
