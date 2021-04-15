@@ -3,7 +3,30 @@
   <component name="ChangeListManager">
     <list default="true" id="e665e684-e50a-44ec-8f54-3844494632c3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/assignments/assignments.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/assignments/assignments.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/assignments/assignments.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/assignments/assignments.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/assignments/assignments.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/assignments/assignments.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/blank/blank.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/blank/blank.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/blank/blank.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/pages.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/pages.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/pages/pages.routing.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/pages/pages.routing.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/theme/components/header/header.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/theme/components/header/header.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/theme/components/menu/vertical-menu/vertical-menu.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/theme/components/menu/vertical-menu/vertical-menu.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/theme/components/menu/vertical-menu/vertical-menu.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/theme/components/sidebar/sidebar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/theme/components/sidebar/sidebar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/theme/components/user-menu/user-menu.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/theme/components/user-menu/user-menu.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/theme/directives/directives.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/theme/directives/widget/widget.directive.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/theme/pipes/pipes.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/theme/pipes/profilePicture/profilePicture.pipe.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/theme/pipes/search/chat-person-search.pipe.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/theme/pipes/search/mail-search.pipe.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/theme/pipes/search/user-search.pipe.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/theme/pipes/truncate/truncate.pipe.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/jwt-interceptor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/jwt-interceptor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

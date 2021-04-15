@@ -9,20 +9,15 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 };
 import { DragulaModule } from 'ng2-dragula';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrModule } from 'ngx-toastr';
-import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
-import { PipesModule } from '../theme/pipes/pipes.module';
 import { routing } from './pages.routing';
 import { PagesComponent } from './pages.component';
 
 import { HeaderComponent } from '../theme/components/header/header.component';
 import { FooterComponent } from '../theme/components/footer/footer.component';
 import { SidebarComponent } from '../theme/components/sidebar/sidebar.component';
-import { VerticalMenuComponent } from '../theme/components/menu/vertical-menu/vertical-menu.component';
 import { HorizontalMenuComponent } from '../theme/components/menu/horizontal-menu/horizontal-menu.component';
 import { BackTopComponent } from '../theme/components/back-top/back-top.component';
 import { UserMenuComponent } from '../theme/components/user-menu/user-menu.component';
-import { BlankComponent } from './blank/blank.component';
 import { SearchComponent } from './search/search.component';
 
 
@@ -33,8 +28,6 @@ import { SearchComponent } from './search/search.component';
     PerfectScrollbarModule,
     DragulaModule.forRoot(),
     NgbModule.forRoot(),
-    MultiselectDropdownModule,
-    PipesModule,
     routing
   ],
   declarations: [
@@ -42,11 +35,9 @@ import { SearchComponent } from './search/search.component';
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
-    VerticalMenuComponent,
     HorizontalMenuComponent,
     BackTopComponent,
     UserMenuComponent,
-    BlankComponent,
     SearchComponent
   ],
   providers:[

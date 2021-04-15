@@ -9,6 +9,7 @@ import {AssignmentsService} from './assignments.service';
 import {DragulaService} from 'ng2-dragula';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
+import {DatePipe} from '@angular/common';
 
 @Component({
     selector: 'app-membership',
@@ -42,6 +43,7 @@ export class AssignmentsComponent implements OnInit {
 
     constructor(public fb: FormBuilder,
                 public toastrService: ToastrService,
+                public datepipe: DatePipe,
                 public membershipService: AssignmentsService,
                 public modalService: NgbModal, private dragulaService: DragulaService, private route: ActivatedRoute,
                 private router: Router) {

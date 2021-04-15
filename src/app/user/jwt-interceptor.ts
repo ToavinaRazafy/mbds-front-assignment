@@ -11,6 +11,7 @@ export class JwtInterceptor implements HttpInterceptor{
         const req = request.url;
         const currentUser = this.authenticationService.currentUserValue;
         const url = 'https://back-assignments-mbds1055.herokuapp.com/';
+        // const url = 'http://localhost:4000/';
         console.log(url);
         if (!request.url.startsWith('http')) {
             request = request.clone({

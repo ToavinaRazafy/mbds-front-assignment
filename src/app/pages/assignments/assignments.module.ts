@@ -6,9 +6,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DragulaModule } from 'ng2-dragula';
-import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
-import { NgxPaginationModule } from 'ngx-pagination';
-import { PipesModule } from '../../theme/pipes/pipes.module';
 import { AssignmentsComponent } from './assignments.component';
 import { AssignmentsData } from './assignments.data';
 import { AddAssignmentsComponent } from './add-assignments/add-assignments.component';
@@ -29,10 +26,7 @@ export const routes = [
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    MultiselectDropdownModule,
-    NgxPaginationModule,
-    DragulaModule.forRoot(),
-    PipesModule
+    DragulaModule.forRoot()
   ],
   declarations: [
     AssignmentsComponent,
